@@ -18,10 +18,15 @@ import MenuItem from '@mui/material/MenuItem';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import userImg from '../images/user.jpg';
 
-const Header = () => {
+import SignInModal from '../components/SignInModal';
 
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+const Header = () => {
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseMOdal = () => setIsModalOpen(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -92,7 +97,7 @@ const Header = () => {
                         }}
                       >
                         <MenuItem onClick={handleCloseNavMenu}>
-                            <MenuNavLink to="/">Home</MenuNavLink>
+                            <MenuNavLink to="/">Main</MenuNavLink>
                         </MenuItem>
                         <MenuItem onClick={handleCloseNavMenu}>
                             <MenuNavLink to="/news">News</MenuNavLink>
@@ -124,7 +129,7 @@ const Header = () => {
                           onClick={handleCloseNavMenu}
                           sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                                <NavLinkStyled to="/">Home</NavLinkStyled>
+                                <NavLinkStyled to="/">Main</NavLinkStyled>
                         </Button>
                             
                         <Button
@@ -136,40 +141,42 @@ const Header = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                      <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                          <Avatar alt="User" src={userImg} />
-                        </IconButton>
-                      </Tooltip>
-                      <Menu
-                        sx={{ mt: '45px' }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
-                      >
-                        <MenuItem onClick={handleCloseUserMenu}>
-                            <MenuNavLink to='/profile'>Profile</MenuNavLink>
-                        </MenuItem>
-                                {/* тут потрібно обнулити юзера в стейті і локал сторедж */}
-                        <MenuItem onClick={handleCloseUserMenu}>
-                            <Typography textAlign="center" sx={{fontWeight: 700}}>Logout</Typography>
-                        </MenuItem>
-                        
-                      </Menu>
+                        <Button sx={{fontWeight: 700}} color="inherit" onClick={handleOpenModal}>Sign in</Button>
+                        <Tooltip title="Open settings">
+                          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <Avatar alt="User" src={userImg} />
+                          </IconButton>
+                        </Tooltip>
+                        <Menu
+                          sx={{ mt: '45px' }}
+                          id="menu-appbar"
+                          anchorEl={anchorElUser}
+                          anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                          }}
+                          open={Boolean(anchorElUser)}
+                          onClose={handleCloseUserMenu}
+                        >
+                          <MenuItem sx={{justifyContent: 'center'}} onClick={handleCloseUserMenu}>
+                              <MenuNavLink to='/profile'>Profile</MenuNavLink>
+                          </MenuItem>
+                                  {/* тут потрібно обнулити юзера в стейті і локал сторедж */}
+                          <MenuItem onClick={handleCloseUserMenu}>
+                              <Typography textAlign="center" sx={{fontWeight: 700}}>Sign out</Typography>
+                          </MenuItem>
+
+                        </Menu>
                     </Box>
                   </Toolbar>
                 </Container>
             </AppBar>
+            <SignInModal open={isModalOpen} handleClose={handleCloseMOdal} />
 
             <Suspense fallback={<div>Loading...</div>}>
                 <Outlet />
