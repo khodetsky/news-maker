@@ -1,4 +1,9 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { setUserLoggedIn, setUsername } from "../redux/userDataSlice";
+import { useDispatch } from "react-redux";
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,16 +20,38 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-export default function SignInForm({closeModal}) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    closeModal();
-  };
+export default function SignInForm({ closeModal }) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    
+    const initNotifixParams = {
+        position: 'center-top',
+        distance: '40px',
+        timeout: 3000,
+        fontSize: '15px',
+        width: '320px',
+        pauseOnHover: true,
+    };
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const userData = {
+        username: data.get('username'),
+        password: data.get('password'),
+        };
+
+        if (userData.username === 'admin' && userData.password === '12345') {
+            window.localStorage.setItem('username', JSON.stringify(userData.username));
+            dispatch(setUserLoggedIn(true));
+            dispatch(setUsername(userData.username));
+            closeModal();
+            navigate("/profile", { replace: true });
+        } else {
+            Notify.failure('Ім\'я користувача або пароль введено неправильно.', initNotifixParams);
+        }
+      
+    };
 
   return (
     <ThemeProvider theme={theme}>
@@ -48,10 +75,10 @@ export default function SignInForm({closeModal}) {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField

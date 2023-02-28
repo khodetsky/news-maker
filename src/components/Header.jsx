@@ -1,7 +1,8 @@
 import { Outlet, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Suspense } from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector  } from "react-redux";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,29 +20,49 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import userImg from '../images/user.jpg';
 
 import SignInModal from '../components/SignInModal';
+import { getUserStatus } from "../redux/selectors";
+import { setUserLoggedIn, setUsername } from "../redux/userDataSlice";
 
 const Header = () => {
+    const dispatch = useDispatch();
+    const userLoggedIn = useSelector(getUserStatus);
+
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseMOdal = () => setIsModalOpen(false);
+    useEffect(() => {
+        if (window.localStorage.getItem('username')) {
+            dispatch(setUserLoggedIn(true));
+            dispatch(setUsername(JSON.parse(window.localStorage.getItem('username'))));
+        }
+    }, [dispatch])
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseMOdal = () => setIsModalOpen(false);
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    
+    const handleOpenUserMenu = (event) => {
+      setAnchorElUser(event.currentTarget);
+    };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    const handleCloseNavMenu = () => {
+      setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+      setAnchorElUser(null);
+    };
+    
+    const handleUserSignOut = () => {
+        dispatch(setUserLoggedIn(false));
+        dispatch(setUsername(''));
+        window.localStorage.removeItem('username');
+    }
+
 
     return (
         <>
@@ -110,7 +131,7 @@ const Header = () => {
                       variant="h5"
                       noWrap
                       component="a"
-                      href=""
+                      href="/test-AlterEgo/"
                       sx={{
                         mr: 2,
                         display: { xs: 'flex', md: 'none' },
@@ -140,38 +161,45 @@ const Header = () => {
                         </Button>
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Button sx={{fontWeight: 700}} color="inherit" onClick={handleOpenModal}>Sign in</Button>
-                        <Tooltip title="Open settings">
-                          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="User" src={userImg} />
-                          </IconButton>
-                        </Tooltip>
-                        <Menu
-                          sx={{ mt: '45px' }}
-                          id="menu-appbar"
-                          anchorEl={anchorElUser}
-                          anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                          keepMounted
-                          transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                          open={Boolean(anchorElUser)}
-                          onClose={handleCloseUserMenu}
-                        >
-                          <MenuItem sx={{justifyContent: 'center'}} onClick={handleCloseUserMenu}>
-                              <MenuNavLink to='/profile'>Profile</MenuNavLink>
-                          </MenuItem>
-                                  {/* тут потрібно обнулити юзера в стейті і локал сторедж */}
-                          <MenuItem onClick={handleCloseUserMenu}>
-                              <Typography textAlign="center" sx={{fontWeight: 700}}>Sign out</Typography>
-                          </MenuItem>
-
-                        </Menu>
+                        <Box sx={{ flexGrow: 0 }}>
+                            {!userLoggedIn
+                                ? <Button sx={{ fontWeight: 700 }} color="inherit" onClick={handleOpenModal}>Sign in</Button>
+                                : (
+                                    <>
+                                        <Tooltip title="Open settings">
+                                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                                <Avatar alt="User" src={userImg} />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Menu
+                                          sx={{ mt: '45px' }}
+                                          id="menu-appbar"
+                                          anchorEl={anchorElUser}
+                                          anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                          }}
+                                          keepMounted
+                                          transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                          }}
+                                          open={Boolean(anchorElUser)}
+                                          onClose={handleCloseUserMenu}
+                                        >
+                                            <MenuItem sx={{justifyContent: 'center'}} onClick={handleCloseUserMenu}>
+                                                <MenuNavLink to='/profile'>Profile</MenuNavLink>
+                                            </MenuItem>
+                                            <MenuItem onClick={() => { handleCloseUserMenu(); handleUserSignOut() }}>
+                                                <Typography textAlign="center" sx={{fontWeight: 700}}>Sign out</Typography>
+                                            </MenuItem>
+                                        </Menu>
+                                    </>
+                                )   
+                            
+                        }
+                        
+                        
                     </Box>
                   </Toolbar>
                 </Container>

@@ -12,9 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter basename="/test-AlterEgo/">
       <ThemeProvider theme={theme}>
-        {/* <Provider store={store}> */}
+        <Provider store={store}>
           <App />
-        {/* </Provider> */}
+        </Provider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
