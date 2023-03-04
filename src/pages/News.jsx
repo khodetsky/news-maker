@@ -16,6 +16,8 @@ export const News = () => {
 
     const [page, setPage] = useState(1);
     const [status, setStatus] = useState("loading");
+    const [load, setLoad] = useState("loading");
+
 
     useEffect(() => {
         if (newsImages.length > 0 && newsData.length > 0) {
@@ -26,7 +28,8 @@ export const News = () => {
                   top: 400,
                   behavior: "smooth",
                 })
-            }
+        }
+        setLoad('done');
     }, [newsData, newsImages, page])
 
     useEffect(() => {
@@ -36,6 +39,7 @@ export const News = () => {
 
     const onLoadMoreBtnClick = () => {
         setPage(prevState => (prevState + 1));
+        setLoad("loading")
     }
 
     return (
@@ -62,7 +66,9 @@ export const News = () => {
                     </Box>
                     {page < 9 &&
                         <Box sx={{ paddingTop: '40px' }}>
-                                <Button variant="contained" onClick={onLoadMoreBtnClick}>Load more</Button>
+                            <Button variant="contained" onClick={onLoadMoreBtnClick}>
+                                {load === "loading" ? "Loading..." : "Load more"}
+                            </Button>
                         </Box>
                     }
                 </Box>
