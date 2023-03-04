@@ -47,6 +47,7 @@ export default function SignInForm({ closeModal }) {
             dispatch(setUsername(userData.username));
             closeModal();
             navigate("/profile", { replace: true });
+            Notify.success(`Ласкаво просимо назад ${userData.username}!`, initNotifixParams)
         } else {
             Notify.failure('Ім\'я користувача або пароль введено неправильно.', initNotifixParams);
         }

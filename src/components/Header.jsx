@@ -2,7 +2,8 @@ import { Outlet, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Suspense } from "react";
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector  } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -30,6 +31,15 @@ const Header = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+  
+    const initNotifixParams = {
+        position: 'center-top',
+        distance: '40px',
+        timeout: 3000,
+        fontSize: '15px',
+        width: '320px',
+        pauseOnHover: true,
+    };
 
     useEffect(() => {
         if (window.localStorage.getItem('username')) {
@@ -61,6 +71,7 @@ const Header = () => {
         dispatch(setUserLoggedIn(false));
         dispatch(setUsername(''));
         window.localStorage.removeItem('username');
+        Notify.success(`Ви вийшли зі свого аккаунту.`, initNotifixParams)
     }
 
 
