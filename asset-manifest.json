@@ -1,13 +1,14 @@
 {
   "files": {
     "main.css": "/test-AlterEgo/static/css/main.c3d5249d.css",
-    "main.js": "/test-AlterEgo/static/js/main.82016b43.js",
+    "main.js": "/test-AlterEgo/static/js/main.a4b92852.js",
+    "static/media/news-paper.jpg": "/test-AlterEgo/static/media/news-paper.4555c1682f2998ef0581.jpg",
     "index.html": "/test-AlterEgo/index.html",
     "main.c3d5249d.css.map": "/test-AlterEgo/static/css/main.c3d5249d.css.map",
-    "main.82016b43.js.map": "/test-AlterEgo/static/js/main.82016b43.js.map"
+    "main.a4b92852.js.map": "/test-AlterEgo/static/js/main.a4b92852.js.map"
   },
   "entrypoints": [
     "static/css/main.c3d5249d.css",
-    "static/js/main.82016b43.js"
+    "static/js/main.a4b92852.js"
   ]
 }
