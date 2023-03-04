@@ -16,7 +16,6 @@ export const News = () => {
 
     const [page, setPage] = useState(1);
     const [status, setStatus] = useState("loading");
-    const [load, setLoad] = useState("loading");
 
 
     useEffect(() => {
@@ -29,7 +28,6 @@ export const News = () => {
                   behavior: "smooth",
                 })
         }
-        setLoad('done');
     }, [newsData, newsImages, page])
 
     useEffect(() => {
@@ -39,7 +37,6 @@ export const News = () => {
 
     const onLoadMoreBtnClick = () => {
         setPage(prevState => (prevState + 1));
-        setLoad("loading")
     }
 
     return (
@@ -67,7 +64,7 @@ export const News = () => {
                     {page < 9 &&
                         <Box sx={{ paddingTop: '40px' }}>
                             <Button variant="contained" onClick={onLoadMoreBtnClick}>
-                                {load === "loading" ? "Loading..." : "Load more"}
+                                Load more
                             </Button>
                         </Box>
                     }
