@@ -18,14 +18,17 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import Stack from '@mui/material/Stack';
 import userImg from '../images/user.jpg';
 
 import SignInModal from '../components/SignInModal';
 import { getUserStatus } from "../redux/selectors";
 import { setUserLoggedIn, setUsername } from "../redux/userDataSlice";
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
     const dispatch = useDispatch();
+    const { t, i18n } = useTranslation();
     const userLoggedIn = useSelector(getUserStatus);
 
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -68,10 +71,14 @@ const Header = () => {
     };
     
     const handleUserSignOut = () => {
-        dispatch(setUserLoggedIn(false));
-        dispatch(setUsername(''));
-        window.localStorage.removeItem('username');
-        Notify.success(`Ви вийшли зі свого аккаунту.`, initNotifixParams)
+      dispatch(setUserLoggedIn(false));
+      dispatch(setUsername(''));
+      window.localStorage.removeItem('username');
+      Notify.success(`Ви вийшли зі свого аккаунту.`, initNotifixParams)
+    }
+  
+    const handleChangeLanguage = (language) => {
+      i18n.changeLanguage(language);
     }
 
 
@@ -129,10 +136,10 @@ const Header = () => {
                         }}
                       >
                         <MenuItem onClick={handleCloseNavMenu}>
-                            <MenuNavLink to="/">Main</MenuNavLink>
+                          <MenuNavLink to="/">{t("main")}</MenuNavLink>
                         </MenuItem>
                         <MenuItem onClick={handleCloseNavMenu}>
-                            <MenuNavLink to="/news">News</MenuNavLink>
+                            <MenuNavLink to="/news">{t("news")}</MenuNavLink>
                         </MenuItem>
                         
                       </Menu>
@@ -161,20 +168,20 @@ const Header = () => {
                           onClick={handleCloseNavMenu}
                           sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                                <NavLinkStyled to="/">Main</NavLinkStyled>
+                                <NavLinkStyled to="/">{t("main")}</NavLinkStyled>
                         </Button>
                             
                         <Button
                           onClick={handleCloseNavMenu}
                           sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            <NavLinkStyled to="/news">News</NavLinkStyled>
+                            <NavLinkStyled to="/news">{t("news")}</NavLinkStyled>
                         </Button>
                     </Box>
 
-                        <Box sx={{ flexGrow: 0 }}>
+                        <Box sx={{ flexGrow: 0, display: "flex" }}>
                             {!userLoggedIn
-                                ? <Button sx={{ fontWeight: 700 }} color="inherit" onClick={handleOpenModal}>Sign in</Button>
+                                ? <Button sx={{ fontWeight: 700 }} color="inherit" onClick={handleOpenModal}>{t("sign in")}</Button>
                                 : (
                                     <>
                                         <Tooltip title="Open settings">
@@ -199,18 +206,19 @@ const Header = () => {
                                           onClose={handleCloseUserMenu}
                                         >
                                             <MenuItem sx={{justifyContent: 'center'}} onClick={handleCloseUserMenu}>
-                                                <MenuNavLink to='/profile'>Profile</MenuNavLink>
+                                                <MenuNavLink to='/profile'>{t("profile")}</MenuNavLink>
                                             </MenuItem>
                                             <MenuItem onClick={() => { handleCloseUserMenu(); handleUserSignOut() }}>
-                                                <Typography textAlign="center" sx={{fontWeight: 700}}>Sign out</Typography>
+                                                <Typography textAlign="center" sx={{fontWeight: 700}}>{t("sign out")}</Typography>
                                             </MenuItem>
                                         </Menu>
                                     </>
                                 )   
-                            
-                        }
-                        
-                        
+                      }
+                      <Stack spacing={1} direction="row" sx={{alignItems: "center", marginLeft: 2}}>
+                        <Button sx={{minWidth: 30, height: 25, padding: "2px 4px"}} size="small" variant="outlined" color="inherit" onClick={() => handleChangeLanguage("en")} >En</Button>
+                        <Button sx={{minWidth: 30, height: 25, padding: "2px 4px"}} size="small" variant="outlined" color="inherit" onClick={() => handleChangeLanguage("uk")} >Uk</Button>
+                      </Stack>     
                     </Box>
                   </Toolbar>
                 </Container>

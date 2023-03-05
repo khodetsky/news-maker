@@ -5,18 +5,19 @@ import { addNewsImages, addNewsData } from "../redux/newsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { getNewsSelector, getImagesSelector } from "../redux/selectors";
 import { PostCard } from "../components/PostCard";
+import { useTranslation } from 'react-i18next';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 export const News = () => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const newsData = useSelector(getNewsSelector);
     const newsImages = useSelector(getImagesSelector);
 
     const [page, setPage] = useState(1);
     const [status, setStatus] = useState("loading");
-
 
     useEffect(() => {
         if (newsImages.length > 0 && newsData.length > 0) {
@@ -64,7 +65,7 @@ export const News = () => {
                     {page < 9 &&
                         <Box sx={{ paddingTop: '40px' }}>
                             <Button variant="contained" onClick={onLoadMoreBtnClick}>
-                                Load more
+                               {t("load more")}
                             </Button>
                         </Box>
                     }

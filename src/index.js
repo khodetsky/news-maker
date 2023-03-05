@@ -7,13 +7,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from './redux/store';
 import { Provider } from "react-redux";
 
+import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter basename="/test-AlterEgo/">
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <App />
+            <App />
         </Provider>
       </ThemeProvider>
     </BrowserRouter>

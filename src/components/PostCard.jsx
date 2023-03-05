@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteNewsData } from "../redux/newsSlice";
+import { useTranslation } from 'react-i18next';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,6 +12,7 @@ import Typography from '@mui/material/Typography';
 
 export function PostCard({postId, image, title, description}) {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     function handleDeleteBtnClick() {
         dispatch(deleteNewsData(postId));
@@ -32,7 +34,7 @@ export function PostCard({postId, image, title, description}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleDeleteBtnClick}>Delete post</Button>
+        <Button size="small" onClick={handleDeleteBtnClick}>{t("delete")}</Button>
       </CardActions>
     </Card>
   );
