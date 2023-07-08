@@ -92,7 +92,7 @@ const Header = () => {
                       variant="h6"
                       noWrap
                       component="a"
-                      href="/test-AlterEgo/"
+                      href="/news-maker/"
                       sx={{
                         mr: 2,
                         display: { xs: 'none', md: 'flex' },
