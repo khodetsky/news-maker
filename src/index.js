@@ -11,7 +11,7 @@ import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/test-AlterEgo/">
+    <BrowserRouter basename="/news-maker/">
       <ThemeProvider theme={theme}>
         <Provider store={store}>
             <App />
