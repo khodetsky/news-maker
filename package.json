@@ -1,8 +1,8 @@
 {
-  "name": "react-progect",
+  "name": "news-maker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://khodetsky.github.io/test-AlterEgo/",
+  "homepage": "https://khodetsky.github.io/news-maker/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
