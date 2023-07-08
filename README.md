@@ -1,7 +1,6 @@
-# Test task from company AlterEgo
+# About
 
-This project was created using
-[Create React App](https://github.com/facebook/create-react-app)
+This is a news site. For convenience, read news can be deleted from the general list. The Material.UI library was used to stylize this site. The site also has an authentication page and the ability to change the language of the main page and navigation menu using the i18next library.
 
 ## Preparation.
 
@@ -10,7 +9,7 @@ This project was created using
 2. Clone this repository.
 3. Install the project's base dependencies with the `npm install` command.
 4. Start development mode by running `npm start`.
-5. Open http://localhost:3000/test-AlterEgo/ to view it in the browser. The page
+5. Open http://localhost:3000/news-maker/ to view it in the browser. The page
    will automatically reload if you make changes to the code. You will see the
    build errors and lint warnings in the console.
 6. Command `npm test` runs the test watcher in an interactivemode. By default,
@@ -26,7 +25,7 @@ The production version of the project is automatically linted, built, and
 deployed to GitHub Pages, in the gh-pages branch, every time the main branch is
 updated. For example, after a direct push or an accepted pull request.
 
-The live page can be viewed at "https://khodetsky.github.io/test-AlterEgo/".
+The live page can be viewed at "https://khodetsky.github.io/news-maker/".
 
 ## How it works
 
